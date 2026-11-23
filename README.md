@@ -26,3 +26,10 @@ Bytes `0xFD`, `0xFE`, and `0xFF` are reserved and never produced by `encode`. `d
 - `encode(input: string): Uint8Array`
 - `decode(bytes: Uint8Array | ArrayBuffer): string`
 - `BOCU1Error` — thrown for invalid input, reserved bytes, truncated escapes, and surrogates.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
